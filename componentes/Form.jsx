@@ -1,16 +1,22 @@
-const Header = window.styled.h1`
-    color: #eead2d;
+export const Header = window.styled.h1`
+    color: #c9c9c9;
     display: flex;
     justify-content: center;
 `;
 
 const Input = window.styled.input`
     border-radius: 5px;
-    background: #ccc;
+    background: ${props => props.inputColor || "#2f343d" };
     font-weight: bold;
     font-size: 18px;
+    
+    ::-webkit-input-placeholder {
+        color: #fff;
+      }
+ 
     margin: 20px;
     padding: 1vh;
+
 `;
 
 const FieldInputs = window.styled.div`
@@ -44,14 +50,39 @@ const Button = window.styled.button`
 `;
 
 
-function Form() {
+const Form = () => {
+    const [name, setName] = React.useState("")
+    const [email, setEmail] = React.useState("");
+
+    function onSubmit(event){
+        event.preventDefault();
+        console.log(name, email)
+    }
+
     return (
-        <form method="GET" action="RotaDeTeste">
+        <form method="GET" action="RotaDeTeste" onSubmit={onSubmit}>
             <Header> Formulário novo</Header>
             <FieldInputs>
-                <Input placeholder="Seu nome" name="nome" type="text" />
-                <Input placeholder="Seu email" name="email" type="email" />
-                <Input placeholder="Sua senha" name="senha" type="password" />
+                <Input placeholder="Seu nome"
+                name="nome"
+                inputColor="#ccc"
+                type="text"
+                value={name}
+                onChange={
+                    e => setName(e.target.value)
+                } />
+                {name}
+                <Input placeholder="Seu email"
+                name="email"
+                inputColor="#ccc"
+                type="email"
+                value={email}
+                onChange={
+                    e => setEmail(e.target.value)
+                } />
+                {email}
+                <Input placeholder="Sua senha" name="senha" inputColor="#ccc" type="password" />
+                <Input placeholder="Teste" name="teste" type="text"  />
                 <Button type="submit">Entrar</Button>
             </FieldInputs>
         </form>
